@@ -1,1 +1,1 @@
-web: voila --port=$PORT --no-browser RunningShoeAPP.ipynb
+web: voila --port=$PORT --no-browser --enable_nbextensions=True RunningShoeAPP.ipynb
