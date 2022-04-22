@@ -1,10 +1,7 @@
-from fastai.vision.widgets import *
-import streamlit as st
+import ipywidgets as widgets
 import PIL.Image
 from fastai.vision.all import Path,load_learner,Image
 from pathlib import Path
-import fastbook
-from fastbook import *
 from fastai.vision.widgets import *
 
 learn_inf = load_learner(Path()/'export.pkl', cpu=True)
