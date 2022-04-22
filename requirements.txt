@@ -1,7 +1,10 @@
 numpy
 streamlit
-torch==1.7.1
-torchvision==0.8.2
-fastai==2.2.5
 jupyter
 nbclient<0.6
+voila
+fastai>=2
+fastbook==0.0.18
+pillow<7
+packaging
+ipywidgets==7.5.1
