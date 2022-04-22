@@ -3,35 +3,19 @@ import streamlit as st
 import PIL.Image
 from fastai.vision.all import Path,load_learner,Image
 from pathlib import Path
+import fastbook
+from fastbook import *
+from fastai.vision.widgets import *
 
-class Predict:
-    def __init__(self, filename):
-        self.learn_inference = load_learner(Path()/filename)
-        self.img = self.get_image_from_upload()
-        if self.img is not None:
-            self.display_output()
-            self.get_prediction()
-    
-    @staticmethod
-    def get_image_from_upload():
-        uploaded_file = st.file_uploader("Upload Files",type=['png','jpeg', 'jpg'])
-        if uploaded_file is not None:
-            return PILImage.create((uploaded_file))
-        return None
-
-    def display_output(self):
-        st.image(self.img.to_thumb(128,128), caption='Uploaded Image')
-
-    def get_prediction(self):
-
-        if st.button('Classify'):
-            pred, pred_idx, probs = self.learn_inference.predict(self.img)
-            st.write(f'Prediction: {pred}; Probability: {probs[pred_idx]:.04f}')
-        else: 
-            st.write(f'Click the button to classify') 
-
-if __name__=='__main__':
-
-    file_name='export.pkl'
-
-    predictor = Predict(file_name)
+learn_inf = load_learner(Path()/'export.pkl', cpu=True)
+btn_upload = widgets.FileUpload()
+out_pl = widgets.Output()
+lbl_pred = widgets.Label()
+def on_click(change):
+    img = PILImage.create(btn_upload.data[-1])
+    out_pl.clear_output()
+    with out_pl: display(img.to_thumb(128,128))
+    pred,pred_idx,probs = learn_inf.predict(img)
+    lbl_pred.value = f'Prediction: {pred}; Probability: {probs[pred_idx]:0.04f}'
+btn_upload.observe(on_click, names=['data'])
+display(VBox([widgets.Label('Select your bear!'), btn_upload, out_pl, lbl_pred]))
