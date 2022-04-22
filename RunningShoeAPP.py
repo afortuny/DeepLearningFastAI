@@ -1,9 +1,8 @@
 from fastai.vision.widgets import *
-from fastai.vision.all import *
-
-from pathlib import Path
-
 import streamlit as st
+import PIL.Image
+from fastai.vision.all import Path,load_learner,Image
+from pathlib import Path
 
 class Predict:
     def __init__(self, filename):
